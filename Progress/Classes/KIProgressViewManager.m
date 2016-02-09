@@ -42,8 +42,9 @@
 # pragma mark - Public
 
 - (void)showProgressOnView:(UIView *)view {
-    self.progressView = [self initializeProgressViewWithFrame:view.frame];
-    
+    if (self.progressView == nil) {
+        self.progressView = [self initializeProgressViewWithFrame:view.frame];
+    }
     [view addSubview:self.progressView];
 }
 

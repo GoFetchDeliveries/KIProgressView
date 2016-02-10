@@ -10,18 +10,22 @@
 
 @implementation KIProgressView
 
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
 # pragma mark - Initialization
 
-- (void)initialize {
-    [self.layer addAnimation:[self mediumProgressAnimation] forKey:@"animation"];
+- (void)didMoveToSuperview {
+    
+    [super didMoveToSuperview];
+
+    //necessary so it doesn't add another animation when moved to superview = nil
+    //and to remove the previous animations if they were not finished!
+    if (!self.superview) {
+        [self.layer removeAllAnimations];
+        return;
+    }
+
+    if (self.window) {
+        [self.layer addAnimation:[self mediumProgressAnimation] forKey:@"animation"];
+    }
 }
 
 - (CAAnimation *)mediumProgressAnimation {
